@@ -1,5 +1,5 @@
 import { BaseEntity, Check, Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
-import { ServerStatus } from "../enums/server-status.enum";
+import { ServerStatus } from "./enums/server-status.enum";
 
 @Entity()
 @Unique('unique_hostname', ['hostname'])

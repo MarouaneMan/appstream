@@ -1,6 +1,6 @@
 import { FilterableField, QueryOptions } from "@nestjs-query/query-graphql";
 import { Field, ObjectType} from "@nestjs/graphql";
-import { IsFQDN, IsIP, IsNotEmpty, IsOptional, ValidateIf } from "class-validator";
+import { IsFQDN, IsIP, IsNotEmpty, IsOptional } from "class-validator";
 import { ServerStatus } from "../enums/server-status.enum";
 
 @ObjectType()
