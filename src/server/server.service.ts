@@ -7,13 +7,10 @@ import { Server } from './server.entity';
 
 @Injectable()
 export class ServerService extends TypeOrmQueryService<Server> {
-
-    constructor
-    (
-        @InjectRepository(Server)
-        repo: Repository<Server>
-    )
-    {
-        super(repo, { useSoftDelete: true })
-    }
+  constructor(
+    @InjectRepository(Server)
+    repo: Repository<Server>,
+  ) {
+    super(repo, { useSoftDelete: true });
+  }
 }

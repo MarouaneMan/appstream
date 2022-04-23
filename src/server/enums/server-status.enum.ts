@@ -1,9 +1,9 @@
-import { registerEnumType } from "@nestjs/graphql";
+import { registerEnumType } from '@nestjs/graphql';
 
 export enum ServerStatus {
-    UP = "UP",
-    DOWN = "DOWN",
-    MAINTENANCE = "MAINTENANCE"
+  UP = 'UP',
+  DOWN = 'DOWN',
+  MAINTENANCE = 'MAINTENANCE',
 }
 
-registerEnumType(ServerStatus, {name : 'ServerStatus'});
+registerEnumType(ServerStatus, { name: 'ServerStatus' });

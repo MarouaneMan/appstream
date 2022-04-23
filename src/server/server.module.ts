@@ -7,27 +7,24 @@ import { ServerService } from './server.service';
 import { ServerResolver } from './server.resolver';
 
 @Module({
-
   providers: [ServerResolver],
-  
+
   imports: [
-
     NestjsQueryGraphQLModule.forFeature({
-
       // Register entities with typeorm and provide query services
       imports: [NestjsQueryTypeOrmModule.forFeature([Server])],
 
       services: [ServerService],
 
       // Generate corresponding resolvers
-      resolvers: [{
-        DTOClass: ServerDto, 
-        EntityClass: Server,
-        ServiceClass: ServerService
-      }],
-    })
-
-  ]
-
+      resolvers: [
+        {
+          DTOClass: ServerDto,
+          EntityClass: Server,
+          ServiceClass: ServerService,
+        },
+      ],
+    }),
+  ],
 })
 export class ServerModule {}
