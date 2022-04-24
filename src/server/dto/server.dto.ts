@@ -1,11 +1,13 @@
 import { FilterableField, QueryOptions } from '@nestjs-query/query-graphql';
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsFQDN, IsIP, IsNotEmpty, IsOptional } from 'class-validator';
 import { ServerStatus } from '../enums';
 
-@ObjectType()
+@ObjectType('Server')
+@InputType('CreateServerInput')
 @QueryOptions({ maxResultsSize: -1 })
 export class ServerDto {
+  
   @Field()
   @IsNotEmpty()
   hostname: string;

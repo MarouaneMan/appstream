@@ -3,7 +3,7 @@ import { TypeOrmQueryService } from '@nestjs-query/query-typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Server } from './server.entity';
+import { Server } from './entities/server.entity';
 
 @Injectable()
 export class ServerService extends TypeOrmQueryService<Server> {
