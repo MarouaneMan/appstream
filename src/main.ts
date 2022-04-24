@@ -9,7 +9,6 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.use(helmet())
-
   app.enableCors()
 
   app.useGlobalPipes(
@@ -18,6 +17,8 @@ async function bootstrap() {
       whitelist: true,
       forbidNonWhitelisted: true,
       skipMissingProperties: false,
+      skipNullProperties: false,
+      skipUndefinedProperties: false,
       forbidUnknownValues: true,
     }),
   );
