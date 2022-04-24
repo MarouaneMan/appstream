@@ -1,15 +1,10 @@
 import { Module } from '@nestjs/common';
 import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
-import { Server } from './entities/server.entity';
-import { ServerDto } from './dto/server.dto';
+import { CpuModel, GpuModel, Server, ServerModel } from './entities';
 import { ServerService } from './server.service';
 import { ServerResolver } from './server.resolver';
-import { ServerModel } from './entities/server-model.entity';
-import { CpuModel } from './entities/cpu-model.entity';
-import { GpuModel } from './entities/gpu-model.entity';
-import { CpuModelDto } from './dto/cpu-model.dto';
-import { GpuModelDto } from './dto/gpu-model.dto';
+import { CpuModelDto, GpuModelDto, ServerDto } from './dto';
 
 const entities = [Server, ServerModel, CpuModel, GpuModel];
 
