@@ -24,7 +24,7 @@ export class ServerDto {
 
   @Field()
   @IsFQDN()
-  FQDN: string;
+  fqdn: string;
 
   @Field((type) => ServerStatus)
   status: ServerStatus;

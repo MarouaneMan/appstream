@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
-import { CpuModel, GpuModel, Server, ServerModel } from './entities';
+import { CpuModel, GpuModel, Server, ServerModel, ServerModelToCpuModel } from './entities';
+import { CpuModelDto, GpuModelDto, ServerDto, ServerModelDto, ServerModelToCpuModelDto} from './dto';
 import { ServerService } from './server.service';
 import { ServerResolver } from './server.resolver';
-import { CpuModelDto, GpuModelDto, ServerDto } from './dto';
 
-const entities = [Server, ServerModel, CpuModel, GpuModel];
+const entities = [Server, ServerModel, ServerModelToCpuModel, CpuModel, GpuModel];
 
 @Module({
   providers: [ServerResolver],
@@ -35,6 +35,16 @@ const entities = [Server, ServerModel, CpuModel, GpuModel];
           DTOClass: GpuModelDto,
           EntityClass: GpuModel,
           CreateDTOClass: GpuModelDto,
+        },
+        {
+          DTOClass: ServerModelDto,
+          EntityClass: ServerModel,
+          CreateDTOClass: ServerModelDto,
+        },
+        {
+          DTOClass: ServerModelToCpuModelDto,
+          EntityClass: ServerModelToCpuModel,
+          CreateDTOClass: ServerModelToCpuModelDto,
         },
       ],
     }),

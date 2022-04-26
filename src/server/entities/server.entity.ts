@@ -35,7 +35,7 @@ export class Server {
   publicIP?: string;
 
   @Column({ unique: true })
-  FQDN: string;
+  fqdn: string;
 
   @Column({
     type: 'enum',

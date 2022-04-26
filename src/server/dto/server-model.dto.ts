@@ -1,10 +1,14 @@
-import { FilterableField, QueryOptions } from "@nestjs-query/query-graphql";
-import { Field, Int, ObjectType } from "@nestjs/graphql";
-import { IsNotEmpty, IsPositive, Max, Min } from "class-validator";
-import { CpuModel } from "../entities/cpu-model.entity";
-import { GpuModel } from "../entities/gpu-model.entity";
+import { CursorConnection, FilterableField, QueryOptions, UnPagedRelation } from "@nestjs-query/query-graphql";
+import { Field, InputType, Int, ObjectType } from "@nestjs/graphql";
+import { IsNotEmpty, Max, Min } from "class-validator";
+import { CpuModelDto } from "./cpu-model.dto";
+import { GpuModelDto } from "./gpu-model.dto";
+import { ServerModelToCpuModelDto } from "./server-model-to-cpu-model.dto";
 
 @ObjectType('ServerModel')
+@InputType('CreateServerModelInput')
+@UnPagedRelation('serverModelToCpuModel', () => ServerModelToCpuModelDto)
+@CursorConnection('gpu', () => GpuModelDto)
 @QueryOptions({ maxResultsSize: -1})
 export class ServerModelDto 
 {
@@ -15,11 +19,5 @@ export class ServerModelDto
     @Field(() => Int, {description: 'Ram in MegaByte'})
     @Min(1024)
     @Max(1024 * 1024)
-    RAM:number;
-
-    @Field()
-    CPUs:CpuModel[]
-
-    @Field()
-    GPUs:GpuModel[]
+    ram:number;
 }

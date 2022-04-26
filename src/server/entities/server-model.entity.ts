@@ -1,25 +1,25 @@
 import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 import { CpuModel } from "./cpu-model.entity";
 import { GpuModel } from "./gpu-model.entity";
+import { ServerModelToCpuModel } from "./server-model-to-cpu-model.entity";
 
 @Entity()
 @Unique('unique_server_label', ['label'])
 export class ServerModel
 {
     @PrimaryGeneratedColumn()
-    id:number;
+    id:number & { __brand : "ServerModelId"};
 
     @Column()
     label:string;
 
     @Column()
-    RAM:number;
+    ram:number;
 
-    @ManyToMany(() => CpuModel)
-    @JoinTable({name : 'server_model_cpus'})
-    CPUs:CpuModel[]
-
+    @OneToMany(() => ServerModelToCpuModel, (serverModelToCpuModel) => serverModelToCpuModel.serverModel)
+    serverModelToCpuModels:ServerModelToCpuModel[]
+    
     @ManyToMany(() => GpuModel)
     @JoinTable({name : 'server_model_gpus'})
-    GPUs:GpuModel[]
+    gpus:GpuModel[]
 }

@@ -14,7 +14,7 @@ export class GpuModelDto {
     @Field(() => Int, { description: 'Video ram in MegaBytes'})
     @Min(1024)
     @Max(1024 * 1024)
-    VRAM:number;
+    vram:number;
 
     @Field(() => Int)
     @Min(0)

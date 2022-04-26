@@ -5,13 +5,13 @@ import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
 export class GpuModel
 {
     @PrimaryGeneratedColumn()
-    id:number;
+    id:number & { __brand : "GpuModelID"};
 
     @Column()
     label:string;
 
     @Column()
-    VRAM:number;
+    vram:number;
 
     @Column()
     encoderCount:number;
