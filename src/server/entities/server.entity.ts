@@ -1,5 +1,4 @@
 import {
-  BaseEntity,
   Check,
   Column,
   CreateDateColumn,
@@ -9,11 +8,12 @@ import {
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
-import { ServerStatus } from './enums';
+import { ServerStatus } from '../enums';
 
 @Entity()
 @Unique('unique_hostname', ['hostname'])
-export class Server extends BaseEntity {
+export class Server {
+  
   @PrimaryGeneratedColumn('uuid')
   id: string & { __brand: 'ServerID' };
 
@@ -35,7 +35,7 @@ export class Server extends BaseEntity {
   publicIP?: string;
 
   @Column({ unique: true })
-  FQDN: string;
+  fqdn: string;
 
   @Column({
     type: 'enum',
