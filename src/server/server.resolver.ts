@@ -15,6 +15,8 @@ export class ServerResolver {
   restoreOneServer(
     @Args('input', { type: () => ID }) id: string,
   ): Promise<ServerDto> {
+    // TODO: find out how to fix ts type error
+    // @ts-ignore
     return this.service.restoreOne(id);
   }
 
