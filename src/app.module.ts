@@ -4,6 +4,8 @@ import { ServerModule } from './server/server.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { config } from './config';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { config } from './config';
     }),
 
     ServerModule,
-  ],
+    UserModule,
+    AuthModule,
+  ]
 })
 export class AppModule {}
