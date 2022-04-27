@@ -1,10 +1,12 @@
-import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
-import { UseGuards } from '@nestjs/common'
+import { Query, Args, Context, Field, Mutation, ObjectType, Resolver, Int } from '@nestjs/graphql';
+import { Logger, UseGuards } from '@nestjs/common'
 import { AuthService } from './auth.service';
 import { LoginResponseDto } from './dto/login-response.dto';
 import { GqlAuthGuard } from './guards/gql-auth.guard';
 import { LoginInputDto } from './dto/login-input.dto';
-import { RequestWithAuthenticatedUser } from './auth.interfaces';
+import { AuthenticatedUser, RequestWithAuthenticatedUser } from './auth.interfaces';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { CurrentUser } from './decorators/current-user.decorator';
 
 @Resolver()
 export class AuthResolver {
@@ -19,5 +21,15 @@ export class AuthResolver {
     )
     {
         return this.authService.login(req.user)
+    }
+    
+    @Query(() => Int)
+    @UseGuards(JwtAuthGuard)
+    testProtectedEndPoint(
+        // This is a cleaner way to get the user from the current context
+        @CurrentUser() user:AuthenticatedUser
+    ) : number {
+        Logger.log("User object in the protected route", user, "AuthResolver")
+        return 6666
     }
 }

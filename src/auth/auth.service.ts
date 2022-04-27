@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import { User } from 'src/user/user.entity';
 import { LoginResponseDto } from './dto/login-response.dto';
 import { JwtService } from '@nestjs/jwt';
+import { AuthenticatedUser, JwtPayload } from './auth.interfaces';
 
 /**
  * Salt rounds used to generate bcrypt hash
@@ -16,16 +17,15 @@ export class AuthService {
     constructor(
         @InjectQueryService(User)
         private readonly userQueryService:QueryService<User>,
-        
         private jwtService:JwtService
     )
     {
     }
 
-    async login(user:User) : Promise<LoginResponseDto> {
+    async login(user:AuthenticatedUser) : Promise<LoginResponseDto> {
         
         // Make jwt payload
-        const payload = {
+        const payload:JwtPayload = {
             sub: user.id,
             email : user.email,
         };
@@ -36,10 +36,10 @@ export class AuthService {
         return { accessToken }
     }
 
-    async validateUser(email:string, password:string) : Promise<User | null>
+    async validateUser(email:string, password:string) : Promise<AuthenticatedUser | null>
     {
         // Query user by its email address
-        const [user] = await this.userQueryService.query({
+        const [{passwordHash, ...user}] = await this.userQueryService.query({
             filter: {
                 email: { eq: email}
             }
@@ -50,9 +50,8 @@ export class AuthService {
         {
             const isSame = await this.compareHashToPlainPassword(
                 password,
-                user.passwordHash
+                passwordHash
             )
-            user.passwordHash = null;
             if (isSame) return user;
         }
         return null;
