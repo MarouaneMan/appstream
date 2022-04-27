@@ -8,5 +8,7 @@ export interface RequestWithAuthenticatedUser extends Request {
 
 export type JwtPayload = {
     readonly sub:string
+    readonly jti:string
+    readonly exp?:number
     readonly email:string
 }

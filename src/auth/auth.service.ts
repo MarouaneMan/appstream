@@ -1,10 +1,12 @@
 import { InjectQueryService, QueryService } from '@nestjs-query/core';
-import { Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import bcrypt from 'bcrypt';
 import { User } from 'src/user/user.entity';
 import { LoginResponseDto } from './dto/login-response.dto';
 import { JwtService } from '@nestjs/jwt';
 import { AuthenticatedUser, JwtPayload } from './auth.interfaces';
+import { randomUUID } from 'crypto';
+import { Cache } from 'cache-manager';
 
 /**
  * Salt rounds used to generate bcrypt hash
@@ -15,11 +17,25 @@ const BCRYPT_SALT_ROUND = 10
 export class AuthService {
 
     constructor(
+        
+        @Inject(CACHE_MANAGER)
+        private cacheManager:Cache,
+
         @InjectQueryService(User)
         private readonly userQueryService:QueryService<User>,
-        private jwtService:JwtService
+        
+        private jwtService:JwtService,
     )
     {
+    }
+
+    async revokeToken(payload:JwtPayload) {
+        // TODO: implement this
+    }
+
+    async isTokenRevoked(payload:JwtPayload) : Promise<boolean> {
+        let result = await this.cacheManager.get(payload.jti);
+        return !!result;
     }
 
     async login(user:AuthenticatedUser) : Promise<LoginResponseDto> {
@@ -28,11 +44,12 @@ export class AuthService {
         const payload:JwtPayload = {
             sub: user.id,
             email : user.email,
+            jti: randomUUID()
         };
         
         // Sign payload using global jwt config
         const accessToken = await this.jwtService.signAsync(payload)
-        
+
         return { accessToken }
     }
 
