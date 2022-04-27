@@ -4,11 +4,7 @@ import { AuthService } from './auth.service';
 import { LoginResponseDto } from './dto/login-response.dto';
 import { GqlAuthGuard } from './guards/gql-auth.guard';
 import { LoginInputDto } from './dto/login-input.dto';
-import { User } from 'src/user/user.entity';
-
-interface RequestWithUser extends Request {
-    user?:User
-}
+import { RequestWithAuthenticatedUser } from './auth.interfaces';
 
 @Resolver()
 export class AuthResolver {
@@ -19,7 +15,7 @@ export class AuthResolver {
     @UseGuards(GqlAuthGuard)
     login(
         @Args('loginInputDto') _:LoginInputDto,
-        @Context('req') req:RequestWithUser
+        @Context('req') req:RequestWithAuthenticatedUser
     )
     {
         return this.authService.login(req.user)
